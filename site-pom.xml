@@ -25,7 +25,7 @@ under the License.
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
-    <version>23-SNAPSHOT</version>
+    <version>25-SNAPSHOT</version>
     <relativePath>./pom.xml</relativePath>
   </parent>
 
@@ -58,7 +58,7 @@ under the License.
   </issueManagement>
   <ciManagement>
     <system>Jenkins</system>
-    <url>https://builds.apache.org/view/M-R/view/Maven/job/maven-box/job/maven-apache-parent/</url>
+    <url>https://ci-builds.apache.org/job/Maven/job/maven-box/job/maven-parent/</url>
     <notifiers>
       <notifier>
         <type>mail</type>
@@ -87,16 +87,26 @@ under the License.
         <artifactId>maven-site-plugin</artifactId>
         <configuration>
           <siteDirectory>${basedir}/src/site-docs</siteDirectory>
+          <skipDeploy>true</skipDeploy><!-- don't deploy site with maven-site-plugin -->
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-publish-plugin</artifactId>
         <configuration>
-          <content>${project.reporting.outputDirectory}</content>
+          <content>${project.reporting.outputDirectory}</content><!-- mono-module doesn't require site:stage -->
           <checkoutDirectory>${maven.site.cache}/${maven.site.path}</checkoutDirectory>
           <tryUpdate>true</tryUpdate>
         </configuration>
+        <executions>
+          <execution>
+            <id>scm-publish</id>
+            <phase>site-deploy</phase><!-- deploy site with maven-scm-publish-plugin -->
+            <goals>
+              <goal>publish-scm</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

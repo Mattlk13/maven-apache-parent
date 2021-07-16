@@ -32,7 +32,7 @@ Apache Software Foundation Parent POM
 
     This project consists of a POM that contains settings that are
     likely to be useful to any Apache project that is building and
-    releasing code with Maven 3 (Maven 2.x is not supported any more since version 17). By using this project as a parent,
+    releasing code with Maven. By using this project as a parent,
     a project gets these settings.
 
     Most projects will want to override some of these settings.
@@ -54,18 +54,19 @@ Apache Software Foundation Parent POM
      instance at
      {{<<<https://repository.apache.org/service/local/staging/deploy/maven2>>>}}
      and snapshots to
-     {{<<<https://repository.apache.org/content/repositories/snapshots>>>}}. Note
-     that there are POM parameters (<<<distMgmtSnapshotsName>>> and <<<distMgmtSnapshotsUrl>>>)
+     {{<<<https://repository.apache.org/content/repositories/snapshots>>>}}.\
+     Note that there are POM properties (<<<distMgmtSnapshotsName>>> and <<<distMgmtSnapshotsUrl>>>)
      that you can override to change the snapshot location. 
     
   ** <<mailingLists>>: The POM sets up generic Apache announcement
      lists. You should override this.
-    
+
  * <<pluginManagement>>: The plugin management section specifies versions
     of a list of plugins. See the {{{./plugin-management.html}Plugin Management report}} for
     the complete list with versions. 
     
-  ** The compiler plugin is set to default to <<Java $context.get("maven.compiler.source")>> and $context.get("project.build.sourceEncoding") source.
+  ** The compiler plugin is set to default to <<Java $context.get("maven.compiler.target")>> (<<<maven.compiler.target>>> property)
+     and $context.get("project.build.sourceEncoding") source (<<<project.build.sourceEncoding>>> property).
     
   ** The jar plugin is set to add default specification and implementation entries.
     
@@ -77,11 +78,19 @@ Apache Software Foundation Parent POM
     \<useReleaseProfiles\>.  You can remove this with an empty
     \<arguments/\> element in the configuration of the release plugin.
 
- * <<plugins>>: The plugins section configures two executions:
+ * <<plugins>>: The plugins section configures three executions:
     
   ** maven-remote-resources-plugin for {{{/apache-resource-bundles/}org.apache:apache-jar-resource-bundle:1.4}}.
 
   ** maven-site-plugin:attach-descriptor
+
+  ** maven-enforcer-plugin to check Maven and Java build prerequisites, configured via properties:
+ 
+    *** <<<minimalMavenBuildVersion>>> property: default value is <<Maven $context.get("minimalMavenBuildVersion")>>
+
+    *** <<<minimalJavaBuildVersion>>> property: default value is <<Java $context.get("minimalJavaBuildVersion")>>
+
+    []
 
  * <<Reproducible Builds>>: since version 22 of this parent POM, managed plugins versions are expected to be compliant with {{{https://reproducible-builds.org/}Reproducible Builds}}.
 
@@ -89,12 +98,12 @@ Apache Software Foundation Parent POM
 
 +------+
   <properties>
-    <project.build.outputTimestamp>2019-10-02T08:04:00Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>1</project.build.outputTimestamp>
   </properties>
 +------+
 
    The value will be updated by Maven Release Plugin during releases. If a project wants to disable Reproducible Builds, just define
-   the property value with any single character.
+   the property value with any single non-numeric character.
 
  []
 
@@ -139,6 +148,10 @@ The <<<apache-release>>> Profile
  * <<<$\{artifactId\}-$\{version\}-source-release.[zip|tar.gz].sha512>>>: their checksum(s)
 
  * <<<$\{artifactId\}-$\{version\}-source-release.[zip|tar.gz].asc>>>: their signature(s)
+ 
+ []
+
+ Those files also end up in the staging repository and Maven Central.
 
 Settings Configuration
   
@@ -151,7 +164,7 @@ History
 
 #if( $project.version.endsWith( "SNAPSHOT" ) )
   master: {{{https://github.com/apache/maven-apache-parent/tree/master/pom.xml}$project.version}}
-  ({{{https://github.com/apache/maven-apache-parent/compare/apache-22...master}diff}})
+  ({{{https://github.com/apache/maven-apache-parent/compare/apache-23...master}diff}})
 #end
 #macro ( display $version $date )
 #**##set( $prev = $version - 1 )
@@ -161,6 +174,10 @@ History
 
 *--------------+------------+
 || <<Version>> || <<Release Date>> ||
+*--------------+------------+
+#display( 24, '2021-07-13' )
+*--------------+------------+
+#display( 23, '2020-01-25' )
 *--------------+------------+
 #display( 22, '2020-01-08' )
 *--------------+------------+

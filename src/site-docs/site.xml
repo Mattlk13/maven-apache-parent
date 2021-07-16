@@ -36,7 +36,7 @@ under the License.
   <skin>
     <groupId>org.apache.maven.skins</groupId>
     <artifactId>maven-fluido-skin</artifactId>
-    <version>1.7</version>
+    <version>1.9</version>
   </skin>
 
   <edit>${project.scm.url}</edit>
@@ -61,26 +61,27 @@ under the License.
       <item name="Download" href="download.html"/>
     </menu>
 
-    <menu ref="reports" inherit="bottom" />
+    <menu ref="reports" />
 
-    <!-- Copied from Maven parent's site.xml -->
-    <menu name="Maven Projects" inherit="bottom">
-      <item name="Ant Tasks"         href="https://maven.apache.org/ant-tasks/index.html" />
+    <!-- Copied from Maven parent's site.xml, removing inherit="bottom" -->
+    <menu name="Maven Projects">
       <item name="Archetype"         href="https://maven.apache.org/archetype/index.html" />
+      <item name="Artifact Resolver" href="https://maven.apache.org/resolver/index.html" />
       <item name="Doxia"             href="https://maven.apache.org/doxia/index.html" />
       <item name="JXR"               href="https://maven.apache.org/jxr/index.html" />
-      <item name="Maven 1.x"         href="https://maven.apache.org/maven-1.x/index.html" />
-      <item name="Maven 2 &amp; 3"   href="https://maven.apache.org/index.html" />
+      <item name="Maven"             href="https://maven.apache.org/ref/current" />
       <item name="Parent POMs"       href="https://maven.apache.org/pom/index.html" />
       <item name="Plugins"           href="https://maven.apache.org/plugins/index.html" />
+      <item name="Plugin Testing"    href="https://maven.apache.org/plugin-testing/index.html" />
       <item name="Plugin Tools"      href="https://maven.apache.org/plugin-tools/index.html" />
+      <item name="Resource Bundles"  href="https://maven.apache.org/apache-resource-bundles/index.html" />
       <item name="SCM"               href="https://maven.apache.org/scm/index.html" />
       <item name="Shared Components" href="https://maven.apache.org/shared/index.html" />
       <item name="Skins"             href="https://maven.apache.org/skins/index.html" />
       <item name="Surefire"          href="https://maven.apache.org/surefire/index.html" />
       <item name="Wagon"             href="https://maven.apache.org/wagon/index.html" />
     </menu>
-    <menu name="ASF" inherit="bottom">
+    <menu name="ASF">
       <item name="How Apache Works"  href="https://www.apache.org/foundation/how-it-works.html"/> 
       <item name="Foundation"        href="https://www.apache.org/foundation/"/>
       <item name="Sponsoring Apache" href="https://www.apache.org/foundation/sponsorship.html"/>
