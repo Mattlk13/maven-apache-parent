@@ -60,5 +60,7 @@ project:
       - Java
   policy:
     github_repository_name: maven-apache-parent
+    download_path_suffix: pom
+
   features:
     atr_sync: true
